@@ -45,7 +45,7 @@ def astar(problem, heuristic):
             for child_state, action, action_cost in problem.expand(node.state):
                 child_node = data_structures.Node(child_state, node, action)
                 # update cost of each child
-                child_node.cumulative_cost = node.cumulative_cost + action_cost + heuristic(child_state, problem)
+                child_node.cumulative_cost = node.cumulative_cost + action_cost + heuristic(node.state, problem)
                 fringe.push(child_node, child_node.cumulative_cost)
 
 
@@ -65,10 +65,16 @@ def null_heuristic(state, problem):
 
 
 def manhattan(pos1, pos2):
+    """
+
+    :param pos1: current position in terms of (x, y)
+    :param pos2: objective position in terms of (x, y)
+    :return: the manhattan distance between two positions
+    """
     row1, col1 = pos1
     row2, col2 = pos2
 
-    return abs(row1 - row2) + (col1 - col2)
+    return abs(row1 - row2) + abs(col1 - col2)
 
 def single_heuristic(state, problem):
     """
@@ -79,17 +85,18 @@ def single_heuristic(state, problem):
                 a tuple containing the positions of the remaining medals
     problem: (a Problem object) representing the quest
 
-    :return: the manhattan distance from sammy to the goal
+    :return: the manhattan distance from sammy to the goal as a heuristic
     """
     # Enter your code here and remove the pass statement below
     sammy, medal = state
     heuristic = 0
     if len(medal) == 0:
-        print(medal)
+        print("empty")
+        return heuristic
     else:
-        print(medal)
+        heuristic = manhattan(sammy, medal[0])
 
-    return 0
+    return heuristic
 
 
 
