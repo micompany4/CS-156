@@ -29,7 +29,24 @@ def astar(problem, heuristic):
                 or None if there is no solution
     """
     # Enter your code here and remove the pass statement below
-    pass
+    closed = set()  # keep track of our explored states
+    fringe = data_structures.PriorityQueue()
+    state = problem.start_state()
+    root = data_structures.Node(state)
+    fringe.push(root, root.cumulative_cost)
+    while True:
+        if fringe.empty():
+            return None  # Failure -  no solution was found
+        node = fringe.pop()
+        if problem.is_goal(node.state):
+            return node.actions()
+        if node.state not in closed:  # we are implementing graph search
+            closed.add(node.state)
+            for child_state, action, action_cost in problem.expand(node.state):
+                child_node = data_structures.Node(child_state, node, action)
+                child_node.cumulative_cost = node.cumulative_cost + action_cost  # update cost of each child
+                fringe.push(child_node, child_node.cumulative_cost)
+
 
 
 def null_heuristic(state, problem):
@@ -58,7 +75,14 @@ def single_heuristic(state, problem):
     :return:
     """
     # Enter your code here and remove the pass statement below
-    pass
+    sammy, medal = state
+    row_sammy, col_sammy = sammy
+    row_medal, col_medal = medal
+    manhattan = ((abs(row_sammy - row_medal), abs(col_sammy - col_medal)))
+
+
+    return manhattan
+
 
 
 def better_heuristic(state, problem):
