@@ -30,10 +30,10 @@ def astar(problem, heuristic):
     """
     # Enter your code here and remove the pass statement below
     closed = set()  # keep track of our explored states
-    fringe = data_structures.PriorityQueue()
+    fringe = data_structures.PriorityQueue()  # for astar, the fringe is a priority queue
     state = problem.start_state()
     root = data_structures.Node(state)
-    fringe.push(root, root.cumulative_cost)
+    fringe.push(root, root.cumulative_cost + heuristic(state, problem))  # priority cost + heuristic
     while True:
         if fringe.empty():
             return None  # Failure -  no solution was found
@@ -44,9 +44,8 @@ def astar(problem, heuristic):
             closed.add(node.state)
             for child_state, action, action_cost in problem.expand(node.state):
                 child_node = data_structures.Node(child_state, node, action)
-                # update cost of each child
-                child_node.cumulative_cost = node.cumulative_cost + action_cost + heuristic(node.state, problem)
-                fringe.push(child_node, child_node.cumulative_cost)
+                child_node.cumulative_cost = node.cumulative_cost + action_cost  # update cost of each child
+                fringe.push(child_node, child_node.cumulative_cost + heuristic(child_state, problem))
 
 
 
