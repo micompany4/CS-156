@@ -2,7 +2,7 @@
 # Name:     informed_search
 # Purpose:  Homework 4 - Implement astar and some heuristics
 #
-# Author(s):
+# Author(s): Michael Wong, Joseph Nguyen
 #
 # ----------------------------------------------------------------------
 """
@@ -48,7 +48,6 @@ def astar(problem, heuristic):
                 fringe.push(child_node, child_node.cumulative_cost + heuristic(child_state, problem))
 
 
-
 def null_heuristic(state, problem):
     """
     Trivial heuristic to be used with A*.
@@ -65,19 +64,23 @@ def null_heuristic(state, problem):
 
 def manhattan(pos1, pos2):
     """
-
+    finds the manhattan distance between two objects based on their (x, y) positions
     :param pos1: current position in terms of (x, y)
     :param pos2: objective position in terms of (x, y)
     :return: the manhattan distance between two positions
     """
+    # unpack the position tuples
     row1, col1 = pos1
     row2, col2 = pos2
 
     return abs(row1 - row2) + abs(col1 - col2)
 
+
 def single_heuristic(state, problem):
     """
-    Fill in the docstring here
+    The heuristic is an estimation to how far sammy is to a single medal
+    based on sammy's manhattan distance (north, south, east, west, no diagonals) to that medal
+    It is admissible because...
     :param
     state: A state is represented by a tuple containing:
                 the current position (row, column) of Sammy the Spartan
@@ -88,15 +91,10 @@ def single_heuristic(state, problem):
     """
     # Enter your code here and remove the pass statement below
     sammy, medal = state
-    heuristic = 0
-    if len(medal) == 0:
-        print("empty")
-        return heuristic
+    if len(medal) == 0:     # means we have reached the goal state, set the heuristic value to 0
+        return 0
     else:
-        heuristic = manhattan(sammy, medal[0])
-
-    return heuristic
-
+        return manhattan(sammy, medal[0])
 
 
 def better_heuristic(state, problem):
