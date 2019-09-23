@@ -28,8 +28,23 @@ def astar(problem, heuristic):
     :return: list of actions representing the solution to the quest
                 or None if there is no solution
     """
-    # Enter your code here and remove the pass statement below
-    pass
+    closed = set()  # keep track of our explored states
+    fringe = data_structures.PriorityQueue()  # for astar, the fringe is a priority queue
+    state = problem.start_state()
+    root = data_structures.Node(state)
+    fringe.push(root, root.cumulative_cost + heuristic(state, problem))  # priority cost + heuristic
+    while True:
+        if fringe.empty():
+            return None  # Failure -  no solution was found
+        node = fringe.pop()
+        if problem.is_goal(node.state):
+            return node.actions()
+        if node.state not in closed:  # we are implementing graph search
+            closed.add(node.state)
+            for child_state, action, action_cost in problem.expand(node.state):
+                child_node = data_structures.Node(child_state, node, action)
+                child_node.cumulative_cost = node.cumulative_cost + action_cost  # update cost of each child
+                fringe.push(child_node, child_node.cumulative_cost + heuristic(state, problem))
 
 
 def null_heuristic(state, problem):
