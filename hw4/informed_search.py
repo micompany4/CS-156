@@ -108,7 +108,28 @@ def better_heuristic(state, problem):
     :return:
     """
     # Enter your code here and remove the pass statement below
-    pass
+    sammy, medal = state
+    if len(medal) == 0:
+        return 0
+    
+    r1, c1 = sammy
+    r2, c2 = medal[0]
+
+    # manhattan distance for east/west and north/south
+    d1 = r1 - r2
+    d2 = c1 - c2
+
+    if d1 > 0:
+        d1 = abs(d1) * 4    # moving in north direction
+    else:
+        d1 = abs(d1) * 3    # moving in south direction
+
+    if d2 > 0:
+        d2 = abs(d2) * 1    # moving in west direction
+    else:
+        d2 = abs(d2) * 5    # moving in east direction
+
+    return d1 + d2
 
 
 def gen_heuristic(state, problem):
