@@ -151,4 +151,4 @@ def manhattan_with_cost(pos1, pos2, problem):
         val += abs(dx) * problem.cost['W']  # going west
     else:
         val += abs(dx) * problem.cost['E']  # going east
-    return sum
+    return val
