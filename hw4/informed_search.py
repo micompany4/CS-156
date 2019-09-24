@@ -105,31 +105,31 @@ def better_heuristic(state, problem):
                 the current position (row, column) of Sammy the Spartan
                 a tuple containing the positions of the remaining medals
     problem: (a Problem object) representing the quest
-    :return:
+    :return: a heuristic that takes the cost for each move into consideration
     """
     # Enter your code here and remove the pass statement below
     sammy, medal = state
     if len(medal) == 0:
         return 0
-    
+
     r1, c1 = sammy
     r2, c2 = medal[0]
 
     # manhattan distance for east/west and north/south
-    d1 = r1 - r2
-    d2 = c1 - c2
+    dx = r2 - r1
+    dy = c2 - c1
 
-    if d1 > 0:
-        d1 = abs(d1) * 4    # moving in north direction
+    if dx < 0:
+        dx = abs(dx) * 4    # moving in north direction
     else:
-        d1 = abs(d1) * 3    # moving in south direction
+        dx = abs(dx) * 3    # moving in south direction
 
-    if d2 > 0:
-        d2 = abs(d2) * 1    # moving in west direction
+    if dy < 0:
+        dy = abs(dy) * 1    # moving in west direction
     else:
-        d2 = abs(d2) * 5    # moving in east direction
+        dy = abs(dy) * 5    # moving in east direction
 
-    return d1 + d2
+    return dx + dy
 
 
 def gen_heuristic(state, problem):
@@ -143,4 +143,28 @@ def gen_heuristic(state, problem):
     :return:
     """
     # Enter your code here and remove the pass statement below
-    pass
+    sammy, medals = state
+    total = 0
+    r1, c1 = sammy
+    dx = 0
+    dy = 0
+    if len(medals) == 0:
+        return 0
+
+    for m in medals:
+        r2, c2 = m
+        dx = r2 - r1
+        dy = c2 - c1
+
+        if dx < 0:
+            dx = abs(dx) * 4  # moving in north direction
+        else:
+            dx = abs(dx) * 3  # moving in south direction
+        if dy < 0:
+            dy = abs(dy) * 1  # moving in west direction
+        else:
+            dy = abs(dy) * 5  # moving in east direction
+
+        total += dx + dy
+
+    return total/40
