@@ -76,6 +76,32 @@ def manhattan(pos1, pos2):
     return abs(row1 - row2) + abs(col1 - col2)
 
 
+def manhattan_with_cost(pos1, pos2, problem):
+    """
+    Manhattan distance with cost associated, used for better and general heuristic
+    :param pos1: current position in terms of (x, y)
+    :param pos2: objective position in terms of (x, y)
+    :param problem: the problem object
+    :return: the manhattan distance between two positions with cost associated
+    """
+
+    (r1, c1) = pos1
+    (r2, c2) = pos2
+    dy = r2 - r1
+    dx = c2 - c1
+    val = 0
+
+    if dy < 0:
+        val += abs(dy) * problem.cost['N']  # going north
+    else:
+        val += abs(dy) * problem.cost['S']  # going south
+    if dx < 0:
+        val += abs(dx) * problem.cost['W']  # going west
+    else:
+        val += abs(dx) * problem.cost['E']  # going east
+    return val
+
+
 def single_heuristic(state, problem):
     """
     The heuristic is an estimation to how far sammy is to a single medal
@@ -111,25 +137,7 @@ def better_heuristic(state, problem):
     sammy, medal = state
     if len(medal) == 0:
         return 0
-
-    r1, c1 = sammy
-    r2, c2 = medal[0]
-
-    # manhattan distance for east/west and north/south
-    dx = r2 - r1
-    dy = c2 - c1
-
-    if dx < 0:
-        dx = abs(dx) * 4    # moving in north direction
-    else:
-        dx = abs(dx) * 3    # moving in south direction
-
-    if dy < 0:
-        dy = abs(dy) * 1    # moving in west direction
-    else:
-        dy = abs(dy) * 5    # moving in east direction
-
-    return dx + dy
+    return manhattan_with_cost(sammy, medal[0], problem)
 
 
 def gen_heuristic(state, problem):
