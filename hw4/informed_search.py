@@ -102,12 +102,18 @@ def gen_heuristic(state, problem):
     """
     A more general heuristic to be used when the maze contains an arbitrary number of medals
     and these medals can be anywhere in the maze.
+    Admissible because the manhattan distance with cost between sammy and a medal is always <= the actual cost
+    since it represents a relaxed problem without the walls when we return the max, we are returning the longest
+    path to get to a medal, and hoping to get as many medals on the way
+    Consistent because since we are using the manhattan distance with cost, we know that the estimated cost
+    of each node will be less than or equal to the actual cost. By this logic, we can see that the actual cost from
+    node N to node N' added with the estimated cost of N' will always be greater than or equal the estimated cost of N
     :param
     state: A state is represented by a tuple containing:
                 the current position (row, column) of Sammy the Spartan
                 a tuple containing the positions of the remaining medals
     problem: (a Problem object) representing the quest
-    :return:
+    :return: The maximum manhattan distance with cost of all medals
     """
     (sammy, medal) = state
     if not medal:
