@@ -63,7 +63,6 @@ def null_heuristic(state, problem):
 
 def single_heuristic(state, problem):
     """
-<<<<<<< Updated upstream
     Fill in the docstring here
 =======
     The heuristic is an estimation to how far sammy is to a single medal
@@ -71,7 +70,7 @@ def single_heuristic(state, problem):
     It is admissible because the manhattan distance does not consider the cost for taking
     a certain path, the cost is always 1 per move
     Therefore the heuristic cost will always be less than the actual cost
->>>>>>> Stashed changes
+
     :param
     state: A state is represented by a tuple containing:
                 the current position (row, column) of Sammy the Spartan
@@ -93,12 +92,12 @@ def single_heuristic(state, problem):
 def better_heuristic(state, problem):
     """
     A better heuristic to be used when we know for sure that there is only one medal in the quest.
-<<<<<<< Updated upstream
+
 =======
     In this case, we account for the cost of each move unlike single_heuristic
     It is admissible because it will never exceed the actual cost, just equal to it at most
     It's better than single_heuristic because it will yield a value closer to the actual cost than single_heuristic
->>>>>>> Stashed changes
+
     :param
     state: A state is represented by a tuple containing:
                 the current position (row, column) of Sammy the Spartan
@@ -127,7 +126,7 @@ def gen_heuristic(state, problem):
     if not medal:
         return 0
     return max(manhattan_with_cost(sammy, m, problem) for m in medal)
-<<<<<<< Updated upstream
+
 
 
 def manhattan(pos1, pos2):
@@ -190,7 +189,7 @@ def manhattan_with_cost(pos1, pos2, problem):
     dx = c2 - c1
     val = 0
 
->>>>>>> Stashed changes
+
     if dy < 0:
         val += abs(dy) * problem.cost['N']  # going north
     else:
