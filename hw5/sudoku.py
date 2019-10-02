@@ -16,6 +16,17 @@ import csp
 
 
 # Enter your helper functions here
+def constraint(var1, val1, var2, val2):
+    return not val1 == val2
+
+
+def region(row_min, col_min):
+    tuple_set = set()
+    for i in range(row_min, row_min + 3):
+        for j in range(col_min, col_min + 3):
+            tuple_set.add((i, j))
+    return tuple_set
+
 
 def build_csp(puzzle):
     """
@@ -55,18 +66,6 @@ def build_csp(puzzle):
         index_neighbors[i] = neighbors
 
     return csp.CSP(index_domains, index_neighbors, constraint)
-
-
-def constraint(var1, val1, var2, val2):
-    return not val1 == val2
-
-
-def region(row_min, col_min):
-    tuple_set = set()
-    for i in range(row_min, row_min + 3):
-        for j in range(col_min, col_min + 3):
-            tuple_set.add((i, j))
-    return tuple_set
 
 
 def q1(puzzle):
