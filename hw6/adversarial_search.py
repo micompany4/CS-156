@@ -41,6 +41,8 @@ def minimax(game_state):
     # Enter your code here and remove the raise statement below
     raise NotImplementedError
 
+
+
 def value(game_state, agent):
     """
     Calculate the minimax value for any state under the given agent's
@@ -51,7 +53,17 @@ def value(game_state, agent):
     :return: (integer) value of that state -1, 0 or 1
     """
     # Enter your code here and remove the pass statement below
-    pass
+    if game_state.iswin('AI'):
+        return 1
+    elif game_state.istie():
+        return 0
+    elif game_state.iswin('user'):
+        return -1
+    elif agent == 'AI':
+        return max_value(game_state)
+    else:
+        return min_value(game_state)
+
 
 def max_value(game_state):
     """
@@ -61,7 +73,10 @@ def max_value(game_state):
     :return: (integer) value of that state -1, 0 or 1
     """
     # Enter your code here and remove the pass statement below
-    pass
+    v = max(game_state.successor, key=lambda s: value(s, 'AI'))
+
+    return v
+
 
 def min_value(game_state):
     """
@@ -71,7 +86,9 @@ def min_value(game_state):
     :return: (integer) value of that state -1, 0 or 1
     """
     # Enter your code here and remove the pass statement below
-    pass
+    v = min(game_state.successor, key=lambda s: value(s, 'user'))
+
+    return v
 
 
 
