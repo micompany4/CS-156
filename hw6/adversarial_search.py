@@ -15,6 +15,8 @@ Your task for homework 6 is to implement:
 """
 import random
 import math  # You can use math.inf to initialize to infinity
+import math
+
 
 def rand(game_state):
     """
@@ -39,8 +41,8 @@ def minimax(game_state):
     :return:  a tuple representing the row column of the best move
     """
     # Enter your code here and remove the raise statement below
-    raise NotImplementedError
-
+    # return max(value(game_state.successor(m, 'AI'), 'user') for m in game_state.possible_moves())
+    return max(game_state.possible_moves(), key=lambda node: value(game_state.successor(node, 'AI'), 'user'))
 
 
 def value(game_state, agent):
@@ -53,13 +55,13 @@ def value(game_state, agent):
     :return: (integer) value of that state -1, 0 or 1
     """
     # Enter your code here and remove the pass statement below
-    if game_state.iswin('AI'):
+    if game_state.is_win('AI'):
         return 1
-    elif game_state.istie():
+    elif game_state.is_tie():
         return 0
-    elif game_state.iswin('user'):
+    elif game_state.is_win('user'):
         return -1
-    elif agent == 'AI':
+    elif agent is 'AI':
         return max_value(game_state)
     else:
         return min_value(game_state)
@@ -73,9 +75,8 @@ def max_value(game_state):
     :return: (integer) value of that state -1, 0 or 1
     """
     # Enter your code here and remove the pass statement below
-    v = max(game_state.successor, key=lambda s: value(s, 'AI'))
-
-    return v
+    # return max(game_state.possible_moves(), key=lambda m: value(game_state.successor(m, 'AI'), 'user'))
+    return max(value(game_state.successor(m, 'AI'), 'user') for m in game_state.possible_moves())
 
 
 def min_value(game_state):
@@ -86,10 +87,8 @@ def min_value(game_state):
     :return: (integer) value of that state -1, 0 or 1
     """
     # Enter your code here and remove the pass statement below
-    v = min(game_state.successor, key=lambda s: value(s, 'user'))
-
-    return v
-
+    # return min(game_state.possible_moves(), key=lambda m: value(game_state.successor(m, 'user'), 'AI'))
+    return min(value(game_state.successor(m, 'user'), 'AI') for m in game_state.possible_moves())
 
 
 def alphabeta(game_state):
