@@ -155,7 +155,7 @@ def abmin_value(game_state, alpha, beta):
         v = min(v, ab_value(game_state.successor(s, 'user'), 'AI', alpha, beta))
         if v <= alpha:
             return v
-        beta = max(beta, v)
+        beta = min(beta, v)
     return v
 
 
@@ -168,8 +168,8 @@ def abdl(game_state, depth):
     :return:  a tuple representing the row column of the best move
     """
     # Enter your code here and remove the raise statement below
-    raise NotImplementedError
-
+    return max(game_state.possible_moves(), key=lambda node: abdl_value(game_state.successor(node, 'AI'), 'user',
+                                                                        -math.inf, math.inf, depth))
 
 
 def abdl_value(game_state, agent, alpha, beta, depth):
@@ -183,7 +183,18 @@ def abdl_value(game_state, agent, alpha, beta, depth):
     :return: (integer) utility of that state
     """
     # Enter your code here and remove the pass statement below
-    pass
+    if game_state.is_win('AI'):
+        return 1
+    elif game_state.is_win('user'):
+        return -1
+    elif game_state.is_tie():
+        return 0
+    elif depth <= 0:
+        return game_state.eval()
+    elif agent is 'AI':
+        return abdlmax_value(game_state, alpha, beta, depth)
+    else:
+        return abdlmin_value(game_state, alpha, beta, depth)
 
 
 def abdlmax_value(game_state, alpha, beta, depth):
@@ -195,10 +206,13 @@ def abdlmax_value(game_state, alpha, beta, depth):
     :return: (integer) utility (evaluation function) of that state
     """
     # Enter your code here and remove the pass statement below
-    pass
+    v = -math.inf
+    for s in game_state.possible_moves():
+        v = max(v, abdl_value(game_state.successor(s, 'AI'), 'user', alpha, beta, depth))
+    return v
 
 
-def abdlmin_value( game_state, alpha, beta, depth):
+def abdlmin_value(game_state, alpha, beta, depth):
     """
     Calculate the utility for a non-terminal state under Min's control
     using depth limited alpha beta pruning and the evaluation
@@ -207,5 +221,8 @@ def abdlmin_value( game_state, alpha, beta, depth):
     :return: (integer) utility (evaluation function) of that state
     """
     # Enter your code here and remove the pass statement below
-    pass
+    v = math.inf
+    for s in game_state.possible_moves():
+        v = min(v, abdl_value(game_state.successor(s, 'user'), 'AI', alpha, beta, depth))
+    return v
 
