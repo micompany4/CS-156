@@ -2,7 +2,11 @@
 # Name:     sudoku
 # Purpose:  Homework5
 #
+<<<<<<< HEAD
 # Author(s):
+=======
+# Author(s): Michael Wong, Joseph Nguyen
+>>>>>>> 583f43dbc295ad922cee2ba64de0c3e4049a3a4d
 #
 # ----------------------------------------------------------------------
 """
@@ -16,6 +20,10 @@ import csp
 
 # Enter your helper functions here
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 583f43dbc295ad922cee2ba64de0c3e4049a3a4d
 def build_csp(puzzle):
     """
     Create a CSP object representing the puzzle.
@@ -25,7 +33,12 @@ def build_csp(puzzle):
     :return: CSP object
     """
     # Enter your code here and remove the pass statement below
+<<<<<<< HEAD
     pass
+=======
+    csp_object = csp(puzzle, {'key': 2.23, 'seed': 9.43}, 0) # some random values
+    return csp_object
+>>>>>>> 583f43dbc295ad922cee2ba64de0c3e4049a3a4d
 
 
 def q1(puzzle):
@@ -38,7 +51,15 @@ def q1(puzzle):
     CSP object.
     """
     # Enter your code here and remove the pass statement below
+<<<<<<< HEAD
     pass
+=======
+    csp_obj = build_csp(puzzle)
+    result = (csp_obj.backtracking_search(), csp_obj)
+
+    return result
+
+>>>>>>> 583f43dbc295ad922cee2ba64de0c3e4049a3a4d
 
 def q2(puzzle):
     """
@@ -51,7 +72,15 @@ def q2(puzzle):
     CSP object.
     """
     # Enter your code here and remove the pass statement below
+<<<<<<< HEAD
     pass
+=======
+    csp_obj = build_csp(puzzle)
+    csp_obj.ac3_algorithm()
+    result = (csp_obj.backtracking_search(), csp_obj)
+
+    return result
+>>>>>>> 583f43dbc295ad922cee2ba64de0c3e4049a3a4d
 
 def q3(puzzle):
     """
@@ -64,4 +93,12 @@ def q3(puzzle):
     CSP object.
     """
     # Enter your code here and remove the pass statement below
+<<<<<<< HEAD
     pass
+=======
+    csp_obj = build_csp(puzzle)
+    csp_obj.ac3_algorithm()
+    result = (csp_obj.backtracking_search("MRV"), csp_obj)
+
+    return result
+>>>>>>> 583f43dbc295ad922cee2ba64de0c3e4049a3a4d

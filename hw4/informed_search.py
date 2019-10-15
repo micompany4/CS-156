@@ -61,22 +61,71 @@ def null_heuristic(state, problem):
     return 0
 
 
+def manhattan(pos1, pos2):
+    """
+    finds the manhattan distance between two objects based on their (x, y) positions
+    :param pos1: current position in terms of (x, y)
+    :param pos2: objective position in terms of (x, y)
+    :return: the manhattan distance between two positions
+    """
+    # unpack the position tuples
+    row1, col1 = pos1
+    row2, col2 = pos2
+
+    return abs(row1 - row2) + abs(col1 - col2)
+
+
+def manhattan_with_cost(pos1, pos2, problem):
+    """
+    Manhattan distance with cost associated, used for better and general heuristic
+    :param pos1: current position in terms of (x, y)
+    :param pos2: objective position in terms of (x, y)
+    :param problem: the problem object
+    :return: the manhattan distance between two positions with cost associated
+    """
+
+    (r1, c1) = pos1
+    (r2, c2) = pos2
+    dy = r2 - r1
+    dx = c2 - c1
+    val = 0
+
+    if dy < 0:
+        val += abs(dy) * problem.cost['N']  # going north
+    else:
+        val += abs(dy) * problem.cost['S']  # going south
+    if dx < 0:
+        val += abs(dx) * problem.cost['W']  # going west
+    else:
+        val += abs(dx) * problem.cost['E']  # going east
+    return val
+
+
 def single_heuristic(state, problem):
     """
     The heuristic is an estimation to how far sammy is to a single medal
     based on sammy's manhattan distance (north, south, east, west, no diagonals) to that medal
+<<<<<<< HEAD
     It is admissible because the manhattan distance does not consider the cost for taking
     a certain path, the cost is always 1 per move
     Therefore the heuristic cost will always be less than the actual cost
+=======
+    It is admissible because...
+>>>>>>> 583f43dbc295ad922cee2ba64de0c3e4049a3a4d
     :param
     state: A state is represented by a tuple containing:
                 the current position (row, column) of Sammy the Spartan
                 a tuple containing the positions of the remaining medals
     problem: (a Problem object) representing the quest
+<<<<<<< HEAD
+=======
+
+>>>>>>> 583f43dbc295ad922cee2ba64de0c3e4049a3a4d
     :return: the manhattan distance from sammy to the goal as a heuristic
     """
     # Enter your code here and remove the pass statement below
     sammy, medal = state
+<<<<<<< HEAD
     heuristic = 0
     if len(medal) == 0:
         return heuristic
@@ -84,6 +133,12 @@ def single_heuristic(state, problem):
         heuristic = manhattan(sammy, medal[0])
 
     return heuristic
+=======
+    if len(medal) == 0:     # means we have reached the goal state, set the heuristic value to 0
+        return 0
+    else:
+        return manhattan(sammy, medal[0])
+>>>>>>> 583f43dbc295ad922cee2ba64de0c3e4049a3a4d
 
 
 def better_heuristic(state, problem):
@@ -97,8 +152,12 @@ def better_heuristic(state, problem):
                 the current position (row, column) of Sammy the Spartan
                 a tuple containing the positions of the remaining medals
     problem: (a Problem object) representing the quest
-    :return:
+    :return: a heuristic that takes the cost for each move into consideration
     """
+<<<<<<< HEAD
+=======
+    # Enter your code here and remove the pass statement below
+>>>>>>> 583f43dbc295ad922cee2ba64de0c3e4049a3a4d
     sammy, medal = state
     if len(medal) == 0:
         return 0
@@ -122,6 +181,7 @@ def gen_heuristic(state, problem):
     problem: (a Problem object) representing the quest
     :return: The maximum manhattan distance with cost of all medals
     """
+<<<<<<< HEAD
     (sammy, medal) = state
     if not medal:
         return 0
@@ -166,3 +226,31 @@ def manhattan_with_cost(pos1, pos2, problem):
     else:
         val += abs(dx) * problem.cost['E']  # going east
     return val
+=======
+    # Enter your code here and remove the pass statement below
+    sammy, medals = state
+    total = 0
+    r1, c1 = sammy
+    dx = 0
+    dy = 0
+    if len(medals) == 0:
+        return 0
+
+    for m in medals:
+        r2, c2 = m
+        dx = r2 - r1
+        dy = c2 - c1
+
+        if dx < 0:
+            dx = abs(dx) * 4  # moving in north direction
+        else:
+            dx = abs(dx) * 3  # moving in south direction
+        if dy < 0:
+            dy = abs(dy) * 1  # moving in west direction
+        else:
+            dy = abs(dy) * 5  # moving in east direction
+
+        total += dx + dy
+
+    return total/40
+>>>>>>> 583f43dbc295ad922cee2ba64de0c3e4049a3a4d
