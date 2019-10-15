@@ -181,7 +181,7 @@ def abdl_value(game_state, agent, alpha, beta, depth):
     :return: (integer) utility of that state
     """
     if game_state.is_win('AI'):
-        return 
+        return 100
     elif game_state.is_tie():
         return 0
     elif game_state.is_win('user'):
