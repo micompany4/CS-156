@@ -181,11 +181,11 @@ def abdl_value(game_state, agent, alpha, beta, depth):
     :return: (integer) utility of that state
     """
     if game_state.is_win('AI'):
-        return 
+        return 2 * game_state.size + 2
     elif game_state.is_tie():
         return 0
     elif game_state.is_win('user'):
-        return -100
+        return - 2 * game_state.size - 2
     elif depth == 0:
         return game_state.eval()
     elif agent is 'AI':
@@ -233,4 +233,3 @@ def abdlmin_value(game_state, alpha, beta, depth):
             return v
         beta = min(beta, v)
     return v
- 
