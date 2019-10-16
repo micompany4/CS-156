@@ -2,7 +2,7 @@
 # Name:     adversarial_search
 # Purpose:  Homework 6 - Implement adversarial search algorithms
 #
-# Author:
+# Authors: Joseph Nguyen, Michael Wong
 #
 # ----------------------------------------------------------------------
 """
@@ -192,13 +192,6 @@ def abdl_value(game_state, agent, alpha, beta, depth):
         return abdlmax_value(game_state, alpha, beta, depth)
     else:
         return abdlmin_value(game_state, alpha, beta, depth)
-
-
-def get_depth(game_state):
-    if game_state.is_win('AI') or game_state.is_tie() or game_state.is_win('user'):
-        return 0
-    else:
-        return 1 + get_depth(game_state.last_move)
 
 
 def abdlmax_value(game_state, alpha, beta, depth):
