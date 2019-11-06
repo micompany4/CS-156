@@ -40,7 +40,6 @@ class Belief(object):
         # Initialize to a uniform distribution
         self.current_distribution = {pos: 1 / (size ** 2) for pos in self.open}
 
-
     def update(self, color, sensor_position, model):
         """
         Update the belief distribution based on new evidence:  our agent
@@ -59,7 +58,18 @@ class Belief(object):
         # Don't forget to normalize.
         # Don't forget to update self.open since sensor_position has
         # now been observed.
-        pass
+
+        # calculate probability for all positions in the grid
+        for p in self.current_distribution:
+            self.current_distribution[p] *= model.psonargivendist(color, utils.manhattan_distance(p, sensor_position))
+
+        # normalize the probabilities
+        for p in self.current_distribution:
+            self.current_distribution[p] /= sum(self.current_distribution.values())
+
+        # remove that position from the set of unobserved positions because we have now observed it
+        self.open.remove(sensor_position)
+        # pass
 
     def recommend_sensing(self):
         """
