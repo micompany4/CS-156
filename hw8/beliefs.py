@@ -2,7 +2,7 @@
 # Name:     beliefs
 # Purpose:  Homework 8
 #
-# Author(s):
+# Author(s): Joseph Nguyen, Michael Wong
 #
 # ----------------------------------------------------------------------
 """
@@ -64,8 +64,9 @@ class Belief(object):
             self.current_distribution[p] *= model.psonargivendist(color, utils.manhattan_distance(p, sensor_position))
 
         # normalize the probabilities
+        z = sum(self.current_distribution.values())
         for p in self.current_distribution:
-            self.current_distribution[p] /= sum(self.current_distribution.values())
+            self.current_distribution[p] /= z
 
         # remove that position from the set of unobserved positions because we have now observed it
         self.open.remove(sensor_position)
@@ -84,5 +85,11 @@ class Belief(object):
         :return: tuple representing the position where we should take
             the next measurement
         """
-        # Enter your code and remove the statement below
-        return NotImplemented
+        highest_unobserved = max(self.open, key=self.current_distribution.get)
+        highest_observed = max(self.current_distribution, key=self.current_distribution.get)
+        if self.current_distribution.get(highest_unobserved) > 0:
+            return highest_unobserved
+        elif self.current_distribution.get(highest_unobserved) == 0:
+            return min(self.open, key=lambda x: utils.manhattan_distance(x, highest_observed))
+        else:
+            return highest_observed
