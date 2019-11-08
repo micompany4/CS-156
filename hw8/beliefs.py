@@ -64,9 +64,10 @@ class Belief(object):
         for p in self.current_distribution:
             self.current_distribution[p] *= model.psonargivendist(color, utils.manhattan_distance(p, sensor_position))
 
-        # normalize the probabilities
-        for p in self.current_distribution:
-            self.current_distribution[p] /= sum(self.current_distribution.values())
+            # normalize the probabilities
+            z = sum(self.current_distribution.values())
+            for p in self.current_distribution:
+                self.current_distribution[p] /= z
 
         # remove that position from the set of unobserved positions because we have now observed it
         self.open.remove(sensor_position)
@@ -86,28 +87,13 @@ class Belief(object):
             the next measurement
         """
         # Enter your code and remove the statement below
-        best_prob = -1
-        index = 0
-        position_list = []
-        probability_list = []
-        for i in self.current_distribution:
-            probability_list.append(self.current_distribution[i])
-        for j in self.open:
-            position_list.append(self.open[j])
+        pos_prob = {p: self.current_distribution[p] for p in self.open}
 
-        count = 0
-        while count < len(probability_list):
-            if probability_list[count] > best_prob:
-                best_prob = probability_list[count]
-                index = count
-
-        if probability_list[count] == 0:
-            prob2 = -1
-            count = 0
-            while count < len(position_list):
-                if position_list[count] > prob2:
-                    prob2 = probability_list[count]
-                    index = count
-            return utils.closest_point(position_list[index], self.open)
-
-        return position_list[index]
+        highest_unobserved = max(self.open, key=lambda p: self.current_distribution[p])
+        highest_observed = max(self.current_distribution, key=lambda p: self.current_distribution[p])
+        if self.current_distribution.get(highest_unobserved) > 0:
+            return highest_unobserved
+        elif self.current_distribution.get(highest_unobserved) == 0:
+            return utils.closest_point(highest_observed, self.open)
+        else:
+            return highest_observed
