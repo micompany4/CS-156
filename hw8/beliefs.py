@@ -70,7 +70,6 @@ class Belief(object):
 
         # remove that position from the set of unobserved positions because we have now observed it
         self.open.remove(sensor_position)
-        # pass
 
     def recommend_sensing(self):
         """
@@ -85,11 +84,11 @@ class Belief(object):
         :return: tuple representing the position where we should take
             the next measurement
         """
-        highest_unobserved = max(self.open, key=self.current_distribution.get)
         highest_observed = max(self.current_distribution, key=self.current_distribution.get)
+        if len(self.open) == 0:
+            return highest_observed
+        highest_unobserved = max(self.open, key=self.current_distribution.get)
         if self.current_distribution.get(highest_unobserved) > 0:
             return highest_unobserved
-        elif self.current_distribution.get(highest_unobserved) == 0:
-            return min(self.open, key=lambda x: utils.manhattan_distance(x, highest_observed))
-        else:
-            return highest_observed
+        if self.current_distribution.get(highest_unobserved) == 0:
+            return utils.closest_point(highest_observed, self.open)
