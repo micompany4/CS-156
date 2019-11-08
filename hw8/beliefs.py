@@ -14,6 +14,7 @@ Your task for homework 8 is to implement:
 """
 import utils
 
+
 class Belief(object):
 
     """
@@ -63,7 +64,7 @@ class Belief(object):
         for p in self.current_distribution:
             self.current_distribution[p] *= model.psonargivendist(color, utils.manhattan_distance(p, sensor_position))
 
-        # normalize the probabilities
+            # normalize the probabilities
         z = sum(self.current_distribution.values())
         for p in self.current_distribution:
             self.current_distribution[p] /= z
@@ -72,24 +73,26 @@ class Belief(object):
         self.open.remove(sensor_position)
         # pass
 
+
     def recommend_sensing(self):
         """
         Recommend where we should take the next measurement in the grid.
         The position should be the most promising unobserved location.
         If all remaining unobserved locations have a probability of 0,
         return the unobserved location that is closest to the (observed)
-        location with he highest probablity.
+        location with he highest probability.
         If there are no remaining unobserved locations return the
         (observed) location with the highest probability.
 
         :return: tuple representing the position where we should take
             the next measurement
         """
-        highest_unobserved = max(self.open, key=self.current_distribution.get)
+        # Enter your code and remove the statement below
         highest_observed = max(self.current_distribution, key=self.current_distribution.get)
+        highest_unobserved = max(self.open, key=self.current_distribution.get)
         if self.current_distribution.get(highest_unobserved) > 0:
             return highest_unobserved
         elif self.current_distribution.get(highest_unobserved) == 0:
-            return min(self.open, key=lambda x: utils.manhattan_distance(x, highest_observed))
+            return utils.closest_point(highest_observed, self.open)
         else:
             return highest_observed
