@@ -7,21 +7,19 @@
 # ----------------------------------------------------------------------
 """
 Module to track the belief distribution over all possible grid positions
-
 Your task for homework 8 is to implement:
 1.  update
 2.  recommend_sensing
 """
 import utils
 
-class Belief(object):
 
+class Belief(object):
     """
     Belief class used to track the belief distribution based on the
     sensing evidence we have so far.
     Arguments:
     size (int): the number of rows/columns in the grid
-
     Attributes:
     open (set of tuples): set containing all the positions that have not
         been observed so far.
@@ -63,7 +61,7 @@ class Belief(object):
         for p in self.current_distribution:
             self.current_distribution[p] *= model.psonargivendist(color, utils.manhattan_distance(p, sensor_position))
 
-        # normalize the probabilities
+            # normalize the probabilities
         z = sum(self.current_distribution.values())
         for p in self.current_distribution:
             self.current_distribution[p] /= z
@@ -77,18 +75,18 @@ class Belief(object):
         The position should be the most promising unobserved location.
         If all remaining unobserved locations have a probability of 0,
         return the unobserved location that is closest to the (observed)
-        location with he highest probablity.
+        location with he highest probability.
         If there are no remaining unobserved locations return the
         (observed) location with the highest probability.
-
         :return: tuple representing the position where we should take
             the next measurement
         """
         highest_observed = max(self.current_distribution, key=self.current_distribution.get)
         if len(self.open) == 0:
             return highest_observed
-        highest_unobserved = max(self.open, key=self.current_distribution.get)
-        if self.current_distribution.get(highest_unobserved) > 0:
-            return highest_unobserved
-        if self.current_distribution.get(highest_unobserved) == 0:
-            return utils.closest_point(highest_observed, self.open)
+        else:
+            highest_unobserved = max(self.open, key=self.current_distribution.get)
+            if self.current_distribution.get(highest_unobserved) > 0:
+                return highest_unobserved
+            else:
+                return utils.closest_point(highest_observed, self.open)
