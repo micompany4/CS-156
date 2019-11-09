@@ -69,6 +69,7 @@ class Belief(object):
         # remove that position from the set of unobserved positions because we have now observed it
         self.open.remove(sensor_position)
 
+
     def recommend_sensing(self):
         """
         Recommend where we should take the next measurement in the grid.
