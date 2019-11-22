@@ -92,12 +92,24 @@ def predict_knn(data, example, k):
     """
     Classify an example based on its nearest neighbors
     :param data: list of training examples
-    :param example (Example object): example to classify
+    :param example: (Example object) example to classify
     :param k: number of nearest neighbors to consider
     :return: label: valid label from the given dataset
     """
     # Enter your code and remove the statement below
-    return NotImplemented
+    i = 0
+    training = []  # a list of tuples containing the label and distance of all the training examples
+    while i < len(data):
+        training.append((data[i].label, example.distance(data[i])))
+        i = i + 1
 
+    training.sort(key=lambda x: x[1])    # sorts the training data from shortest to largest distance
 
+    j = 0
+    neighbors = []  # a list containing the labels of the k nearest neighbors
+    while j < k:
+        neighbor_label, neighbor_dist = training[j]
+        neighbors.append(neighbor_label)
+        j = j + 1
 
+    return max(set(neighbors), key=neighbors.count)
