@@ -118,4 +118,4 @@ def predict_knn(data, example, k):
         neighbors.append(neighbor_label)
         j = j + 1
 
-    return max(set(neighbors), key=neighbors.count)
+    return max(set(neighbors), key=neighbors.count)     # return the most reoccurring label
