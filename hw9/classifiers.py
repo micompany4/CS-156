@@ -15,6 +15,8 @@ import numpy as np
 # ----------------------------------------------------------------------
 # Question 1: Multiclass perceptron
 # ----------------------------------------------------------------------
+
+
 class Perceptron(object):
     """
     Represent the Perceptron object
@@ -39,7 +41,6 @@ class Perceptron(object):
         self.weights = {}
         self.valid_labels = labels
         self.iterations = iterations
-
 
     def init_weights(self, num_features):
         """
@@ -68,19 +69,24 @@ class Perceptron(object):
     def update_weights(self, example):
         """
         Update the Perceptron weights based on a single training example
-        :param example (Example): representing a single training example
+        :param example: (Example) representing a single training example
         :return: None
         """
         # Enter your code and remove the statement below
-        return NotImplemented
+        guess = self.predict(example)
+        if guess != example.label:
+            self.weights[example.label] += example.fvector
+            self.weights[guess] -= example.fvector
 
     def predict(self, example):
         """
         Predict the label of the given example
-        :param example (Example): representing a single example
+        :param example: (Example) representing a single example
         :return: label: A valid label
         """
         # Enter your code and remove the statement below
+        result = self.weights @ example.fvector  # dot product
+
         return NotImplemented
 
 
