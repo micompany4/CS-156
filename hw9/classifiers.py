@@ -2,7 +2,7 @@
 # Name:     classifiers
 # Purpose:  Homework 9
 #
-# Author(s):
+# Author(s): Michael Wong, Joseph Nguyen
 #
 # ----------------------------------------------------------------------
 """
@@ -69,25 +69,22 @@ class Perceptron(object):
     def update_weights(self, example):
         """
         Update the Perceptron weights based on a single training example
-        :param example: (Example) representing a single training example
+        :param example (Example): representing a single training example
         :return: None
         """
-        # Enter your code and remove the statement below
-        guess = self.predict(example)
-        if guess != example.label:
-            self.weights[example.label] += example.fvector
-            self.weights[guess] -= example.fvector
+        predicted_label = self.predict(example)
+        actual_label = example.label
+        if predicted_label != actual_label:
+            self.weights[predicted_label] -= example.fvector
+            self.weights[actual_label] += example.fvector
 
     def predict(self, example):
         """
         Predict the label of the given example
-        :param example: (Example) representing a single example
+        :param example (Example): representing a single example
         :return: label: A valid label
         """
-        # Enter your code and remove the statement below
-        result = self.weights @ example.fvector  # dot product
-
-        return NotImplemented
+        return max(self.weights, key=lambda x: self.weights.get(x) @ example.fvector)
 
 
 # ----------------------------------------------------------------------
